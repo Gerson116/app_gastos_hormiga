@@ -25,10 +25,16 @@ step to activate your virtualenv.
 $ source .venv/bin/activate
 ```
 
-If you are a Windows platform, you would activate the virtualenv like this:
+If you are a Windows platform, you would activate the virtualenv like this: CMD
 
 ```
 % .venv\Scripts\activate.bat
+```
+
+If you are a Windows platform, you would activate the virtualenv like this: PowerShell
+
+```
+% .venv\Scripts\Activate.ps1
 ```
 
 Once the virtualenv is activated, you can install the required dependencies.
@@ -39,8 +45,29 @@ $ pip install -r requirements.txt
 
 At this point you can now synthesize the CloudFormation template for this code.
 
+# 1. Preparar el entorno (Solo la primera vez)
+```
+$ cdk bootstrap
+```
+
+# 2. Sintetizar el proyecto
 ```
 $ cdk synth
+```
+
+# 3. Ver qué va a pasar (Opcional pero recomendado)
+```
+$ cdk diff
+```
+
+# 4. Desplegar aceptando cambios de seguridad automáticamente
+```
+$ cdk deploy --require-approval never
+```
+
+# 5. Eliminar el stack
+```
+$ cdk destroy
 ```
 
 To add additional dependencies, for example other CDK libraries, just add

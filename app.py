@@ -3,11 +3,18 @@ import os
 
 import aws_cdk as cdk
 
-from app_gastos_hormigas.app_gastos_hormigas_stack import AppGastosHormigasStack
-
+from app_gastos_hormigas.lib.gastos_hormigas_lambda_stack import GastosHormigasLambdaStack
 
 app = cdk.App()
-AppGastosHormigasStack(app, "AppGastosHormigasStack",
+
+# 1. Obtener la variable de entorno, por defecto 'dev'
+env = app.node.try_get_context("env") or "dev"
+
+# 2. Validar que sea un entorno permitido
+if env not in ["dev", "cert", "prod"]:
+    raise ValueError(f"Entorno no válido: {env}. Debe ser dev, cert o prod.")
+
+GastosHormigasLambdaStack(app, "GastosHormigasLambdaStack", env=env,
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.
