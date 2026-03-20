@@ -1,49 +1,42 @@
+# ¡Mi primer proyecto CDK con Python!
 
-# Welcome to your CDK Python project!
+Este es un proyecto en blanco para el desarrollo de CDK con Python.
 
-This is a blank project for CDK development with Python.
+El archivo `cdk.json` le indica al CDK Toolkit cómo ejecutar tu aplicación.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+Este proyecto está configurado como un proyecto estándar de Python. El proceso de inicialización también crea un entorno virtual dentro de este proyecto, almacenado en el directorio `.venv`. Para crear el entorno virtual, se asume que existe un ejecutable de `python3` (o `python` en Windows) en tu PATH con acceso al paquete `venv`. Si por alguna razón falla la creación automática del entorno virtual, puedes crearlo manualmente.
 
-This project is set up like a standard Python project.  The initialization
-process also creates a virtualenv within this project, stored under the `.venv`
-directory.  To create the virtualenv it assumes that there is a `python3`
-(or `python` for Windows) executable in your path with access to the `venv`
-package. If for any reason the automatic creation of the virtualenv fails,
-you can create the virtualenv manually.
-
-To manually create a virtualenv on MacOS and Linux:
+Para crear manualmente un entorno virtual en MacOS y Linux:
 
 ```
 $ python -m venv .venv
 ```
 
-After the init process completes and the virtualenv is created, you can use the following
-step to activate your virtualenv.
+Una vez que el proceso de inicialización termine y se cree el entorno virtual, puedes usar el siguiente comando para activarlo.
 
 ```
 $ source .venv/bin/activate
 ```
 
-If you are a Windows platform, you would activate the virtualenv like this: CMD
+Si estás en la plataforma Windows, activarías el entorno virtual de la siguiente manera en CMD:
 
 ```
 % .venv\Scripts\activate.bat
 ```
 
-If you are a Windows platform, you would activate the virtualenv like this: PowerShell
+Si estás en la plataforma Windows, activarías el entorno virtual de la siguiente manera en PowerShell:
 
 ```
 % .venv\Scripts\Activate.ps1
 ```
 
-Once the virtualenv is activated, you can install the required dependencies.
+Una vez que el entorno virtual esté activado, puedes instalar las dependencias requeridas.
 
 ```
 $ pip install -r requirements.txt
 ```
 
-At this point you can now synthesize the CloudFormation template for this code.
+En este punto, ya puedes sintetizar la plantilla de CloudFormation para este código.
 
 # 1. Preparar el entorno (Solo la primera vez)
 ```
@@ -62,7 +55,7 @@ $ cdk diff
 
 # 4. Desplegar aceptando cambios de seguridad automáticamente
 ```
-$ cdk deploy --require-approval never
+$ cdk deploy
 ```
 
 # 5. Eliminar el stack
@@ -70,16 +63,21 @@ $ cdk deploy --require-approval never
 $ cdk destroy
 ```
 
-To add additional dependencies, for example other CDK libraries, just add
-them to your `requirements.txt` file and rerun the `python -m pip install -r requirements.txt`
-command.
+# 6. Observación
+En caso de usted haber borrado el bucket manualmente, deberá realizar los siguientes pasos:
 
-## Useful commands
+1. Eliminar el stack `aws cloudformation delete-stack --stack-name CDKToolkit`
+2. Ejecutar el comando `cdk bootstrap`
+3. Ejecutar el comando `cdk deploy`
 
- * `cdk ls`          list all stacks in the app
- * `cdk synth`       emits the synthesized CloudFormation template
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk docs`        open CDK documentation
+Para agregar dependencias adicionales, por ejemplo, otras bibliotecas de CDK, simplemente agrégalas a tu archivo `requirements.txt` y vuelve a ejecutar el comando `python -m pip install -r requirements.txt`.
 
-Enjoy!
+## Comandos útiles
+
+ * `cdk ls`          lista todos los stacks en la aplicación
+ * `cdk synth`       emite la plantilla sintetizada de CloudFormation
+ * `cdk deploy`      despliega este stack a tu cuenta/región de AWS por defecto
+ * `cdk diff`        compara el stack desplegado con el estado actual
+ * `cdk docs`        abre la documentación de CDK
+
+¡Disfrútalo!
