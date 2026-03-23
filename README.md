@@ -56,11 +56,17 @@ $ cdk diff
 # 4. Desplegar aceptando cambios de seguridad automáticamente
 ```
 $ cdk deploy
+
+NOTA: Si se despliega más de un stack, se debe especificar el stack a desplegar o usar --all
+$ cdk deploy --all
 ```
 
 # 5. Eliminar el stack
 ```
 $ cdk destroy
+
+NOTA: Si se despliega más de un stack, se debe especificar el stack a eliminar o usar --all
+$ cdk destroy --all
 ```
 
 # 6. Observación
