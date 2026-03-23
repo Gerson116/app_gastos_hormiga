@@ -22,7 +22,8 @@ class LambdaConfig:
             "requestParameters": {
                 "method.request.querystring.userId": False,
                 "method.request.querystring.identification": False,
-                "method.request.querystring.phoneNumber": False
+                "method.request.querystring.phoneNumber": False,
+                "method.request.querystring.state": False
             }
         },
         {
@@ -51,7 +52,8 @@ class LambdaConfig:
                     "lastName": _apigw.JsonSchema(type=_apigw.JsonSchemaType.STRING, max_length=50),
                     "age": _apigw.JsonSchema(type=_apigw.JsonSchemaType.INTEGER, minimum=1, maximum=150),
                     "identification": _apigw.JsonSchema(type=_apigw.JsonSchemaType.STRING, min_length=11, max_length=11),
-                    "phoneNumber": _apigw.JsonSchema(type=_apigw.JsonSchemaType.STRING, min_length=10, max_length=15)
+                    "phoneNumber": _apigw.JsonSchema(type=_apigw.JsonSchemaType.STRING, min_length=10, max_length=15),
+                    "state": _apigw.JsonSchema(type=_apigw.JsonSchemaType.STRING, min_length=2, max_length=2)
                 }
             )
         },
@@ -71,7 +73,8 @@ class LambdaConfig:
                     "lastName": _apigw.JsonSchema(type=_apigw.JsonSchemaType.STRING, max_length=50),
                     "age": _apigw.JsonSchema(type=_apigw.JsonSchemaType.INTEGER, minimum=1, maximum=150),
                     "identification": _apigw.JsonSchema(type=_apigw.JsonSchemaType.STRING, min_length=11, max_length=11),
-                    "phoneNumber": _apigw.JsonSchema(type=_apigw.JsonSchemaType.STRING, min_length=10, max_length=15)
+                    "phoneNumber": _apigw.JsonSchema(type=_apigw.JsonSchemaType.STRING, min_length=10, max_length=15),
+                    "state": _apigw.JsonSchema(type=_apigw.JsonSchemaType.STRING, min_length=2, max_length=2),
                 }
             )
         },
