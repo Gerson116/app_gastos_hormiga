@@ -18,10 +18,6 @@ class GastosHormigasLambdaStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, env: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        # The code that defines your stack goes here
-
-        # TODO: INVESTIGAR COMO CREAR MULTIPLES LAMBDAS DESDE UN MISMO ARCHIVO
-
         rest_api = _apigw.RestApi(
             self,
             f"gastos-hormigas-api-{env}"
@@ -42,6 +38,7 @@ class GastosHormigasLambdaStack(Stack):
             lambda_function = _lambda.Function(
                 self,
                 id=lambda_id,
+                function_name=lambda_id,
                 runtime=lambda_config["runtime"],
                 handler=lambda_config["handler"],
                 code=_lambda.Code.from_asset(
