@@ -10,11 +10,28 @@ class ResponseTemplate:
     }
 
     @staticmethod
+    def success(data, code=HTTPStatus.OK):
+        return {
+            "statusCode": code,
+            "headers": ResponseTemplate.HEADERS,
+            "body": json.dumps(data)
+        }
+
+    @staticmethod
     def data_response(data, code=HTTPStatus.OK):
         return {
             "statusCode": code,
             "headers": ResponseTemplate.HEADERS,
             "body": json.dumps(data)
+        }
+
+    @staticmethod
+    def created(message, code=HTTPStatus.CREATED):
+        return {
+            "statusCode": code,
+            "headers": ResponseTemplate.HEADERS,
+            "body": None,
+            "message": message
         }
 
     @staticmethod
