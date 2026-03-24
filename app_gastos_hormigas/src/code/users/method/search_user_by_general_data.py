@@ -1,5 +1,6 @@
-
+from app_gastos_hormigas.src.shared.repositories.user import search_user_by_general_data_ddb
 from app_gastos_hormigas.src.shared.response_template import ResponseTemplate
+
 
 def search_user_by_general_data(event):
     try:
@@ -10,27 +11,25 @@ def search_user_by_general_data(event):
         identification: str | None = query_params.get("identification", None)
         phone_number: str | None = query_params.get("phoneNumber", None)
 
-        # TODO: ELIMINAR ESTE BLOQUE DE CODIGO.
-
-        leaked_data = []
-
         if user_id is not None:
-            leaked_data = [item for item in data if item["userId"] == int(user_id)]
-            if len(leaked_data) == 0:
+            data = search_user_by_general_data_ddb(user_id=int(user_id))
+            if len(data) == 0:
                 return ResponseTemplate.not_found("Usuario no encontrado")
-            return ResponseTemplate.data_response(leaked_data)
+            return ResponseTemplate.data_response(data)
 
         elif identification is not None:
-            leaked_data = [item for item in data if identification in item["cedula"]]
-            if len(leaked_data) == 0:
+            data = search_user_by_general_data_ddb(identification=identification)
+            if len(data) == 0:
                 return ResponseTemplate.not_found("Usuario no encontrado")
-            return ResponseTemplate.data_response(leaked_data)
+            return ResponseTemplate.data_response(data)
 
         elif phone_number is not None:
-            leaked_data = [item for item in data if phone_number in item["phoneNumber"]]
-            if len(leaked_data) == 0:
+            data = search_user_by_general_data_ddb(phone_number=phone_number)
+            if len(data) == 0:
                 return ResponseTemplate.not_found("Usuario no encontrado")
-            return ResponseTemplate.data_response(leaked_data)
+            return ResponseTemplate.data_response(data)
+
+        data = search_user_by_general_data_ddb()
 
         return ResponseTemplate.data_response(data)
 
@@ -39,4 +38,3 @@ def search_user_by_general_data(event):
         return ResponseTemplate.error_response(str(e))
     finally:
         print('Finalizo el proceso')
-

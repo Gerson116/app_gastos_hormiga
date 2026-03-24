@@ -26,8 +26,8 @@ else:
 
 full_name = full_project_name(account_env)
 
-GastosHormigasLambdaStack(app, f"{full_name}-lambda", env=env)
+dynamo_stack = GastosHormigasDynamoStack(app, f"{full_name}-dynamo", env=env)
 
-GastosHormigasDynamoStack(app, f"{full_name}-dynamo", env=env)
+GastosHormigasLambdaStack(app, f"{full_name}-lambda", env=env, dynamo_tables=dynamo_stack.tables)
 
 app.synth()

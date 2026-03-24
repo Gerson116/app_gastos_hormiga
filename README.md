@@ -55,18 +55,18 @@ $ cdk diff
 
 # 4. Desplegar aceptando cambios de seguridad automáticamente
 ```
-$ cdk deploy
+$ cdk deploy --require-approval never
 
 NOTA: Si se despliega más de un stack, se debe especificar el stack a desplegar o usar --all
-$ cdk deploy --all
+$ cdk deploy --all --require-approval never
 ```
 
 # 5. Eliminar el stack
 ```
-$ cdk destroy
+$ cdk destroy --require-approval never
 
 NOTA: Si se despliega más de un stack, se debe especificar el stack a eliminar o usar --all
-$ cdk destroy --all
+$ cdk destroy --all --require-approval never
 ```
 
 # 6. Observación

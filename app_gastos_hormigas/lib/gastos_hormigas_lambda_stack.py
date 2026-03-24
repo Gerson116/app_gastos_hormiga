@@ -15,7 +15,7 @@ DIRNAME = os.path.dirname(__file__)
 
 class GastosHormigasLambdaStack(Stack):
 
-    def __init__(self, scope: Construct, construct_id: str, env: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, env: str, dynamo_tables: dict, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         rest_api = _apigw.RestApi(
@@ -76,6 +76,12 @@ class GastosHormigasLambdaStack(Stack):
                 request_models=request_models,
                 request_parameters=lambda_config.get("requestParameters")
             )
+
+            if dynamo_tables:
+                for table_name, table in dynamo_tables.items():
+                    if table_name == lambda_config['tagTable']:
+                        table.grant_read_write_data(lambda_function)
+
             # endregion
 
             

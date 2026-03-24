@@ -2,6 +2,9 @@ from aws_cdk import (
     aws_lambda as _lambda,
     aws_apigateway as _apigw,
 )
+
+from app_gastos_hormigas.constants.table_config import TableName
+
 ###
 # Constantes para la configuración de las lambdas
 ###
@@ -19,6 +22,7 @@ class LambdaConfig:
             "code": "../../",
             "route": "/user/search-user",
             "method": "GET",
+            "tagTable": TableName.USERS,
             "requestParameters": {
                 "method.request.querystring.userId": False,
                 "method.request.querystring.identification": False,
@@ -33,6 +37,7 @@ class LambdaConfig:
             "code": "../../",
             "route": "/user/{userId}",
             "method": "GET",
+            "tagTable": TableName.USERS,
             "requestParameters": {
                 "method.request.path.userId": True
             }
@@ -44,6 +49,7 @@ class LambdaConfig:
             "code": "../../",
             "route": "/user/add",
             "method": "POST",
+            "tagTable": TableName.USERS,
             "schema": _apigw.JsonSchema(
                 type=_apigw.JsonSchemaType.OBJECT,
                 required=["name", "lastName", "age", "identification", "phoneNumber"],
@@ -64,6 +70,7 @@ class LambdaConfig:
             "code": "../../",
             "route": "/user/update",
             "method": "PATCH",
+            "tagTable": TableName.USERS,
             "schema": _apigw.JsonSchema(
                 type=_apigw.JsonSchemaType.OBJECT,
                 required=["userId"],
@@ -85,6 +92,7 @@ class LambdaConfig:
             "code": "../../",
             "route": "/user/delete/{userId}",
             "method": "DELETE",
+            "tagTable": TableName.USERS,
             "requestParameters": {
                 "method.request.path.userId": True
             }

@@ -5,7 +5,7 @@ from app_gastos_hormigas.src.shared.commond import dynamodb_config
 from app_gastos_hormigas.src.shared.response_template import ResponseTemplate
 
 
-def search_user_by_general_data(
+def search_user_by_general_data_ddb(
     user_id: int | None = None,
     identification: str | None = None,
     phone_number: str | None = None
