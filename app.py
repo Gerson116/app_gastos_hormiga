@@ -1,7 +1,4 @@
-#!/usr/bin/env python3
-
 from app_gastos_hormigas.lib.gastos_hormigas_dynamo_stack import GastosHormigasDynamoStack
-import os
 
 import aws_cdk as cdk
 

@@ -78,9 +78,12 @@ class GastosHormigasLambdaStack(Stack):
             )
 
             if dynamo_tables:
+                temp_tag_table = lambda_config['tagTable'] + f"_{env}"
                 for table_name, table in dynamo_tables.items():
-                    if table_name == lambda_config['tagTable']:
+                    if table_name == temp_tag_table:
                         table.grant_read_write_data(lambda_function)
+                        TABLE_NAME = lambda_config['tagTable'] + f"_{env}"
+                        lambda_function.add_environment(TABLE_NAME, table.table_name)
 
             # endregion
 

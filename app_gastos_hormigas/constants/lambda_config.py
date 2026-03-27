@@ -75,7 +75,7 @@ class LambdaConfig:
                 type=_apigw.JsonSchemaType.OBJECT,
                 required=["userId"],
                 properties={
-                    "userId": _apigw.JsonSchema(type=_apigw.JsonSchemaType.INTEGER),
+                    "userId": _apigw.JsonSchema(type=_apigw.JsonSchemaType.STRING),
                     "name": _apigw.JsonSchema(type=_apigw.JsonSchemaType.STRING, max_length=50),
                     "lastName": _apigw.JsonSchema(type=_apigw.JsonSchemaType.STRING, max_length=50),
                     "age": _apigw.JsonSchema(type=_apigw.JsonSchemaType.INTEGER, minimum=1, maximum=150),

@@ -18,7 +18,7 @@ class GastosHormigasDynamoStack(Stack):
         self.tables = {}
 
         for table in TableConfig.TABLES:
-            table_name = f"{table['name']}-{env}"
+            table_name = f"{table['name']}_{env}"
             dynamodb_table = _dynamodb.Table(
                 self,
                 id=table_name,

@@ -1,4 +1,5 @@
 from typing import Any
+from boto3.dynamodb.conditions import Attr
 
 from app_gastos_hormigas.constants.table_config import TableName
 from app_gastos_hormigas.src.shared.commond import dynamodb_config
@@ -6,55 +7,48 @@ from app_gastos_hormigas.src.shared.response_template import ResponseTemplate
 
 
 def search_user_by_general_data_ddb(
-    user_id: int | None = None,
+    user_id: str | None = None,
     identification: str | None = None,
-    phone_number: str | None = None
+    phone_number: str | None = None,
+    table_name: str | None = None
 ):
     try:
-        table = dynamodb_config(table_name=TableName.USERS)
-
-        response: Any | None = None
+        table = dynamodb_config(table_name=table_name)
+        result = []
 
         if user_id is not None:
-            response = table.get_item(
-                Key={
-                    'userId': user_id,
-                }
-            )
+            response = table.get_item(Key={'UserId': user_id})
+            item = response.get('Item')
+            if item:
+                result = [item]
         elif identification is not None:
-            response = table.get_item(
-                Key={
-                    'identification': identification,
-                }
-            )
+            response = table.scan(FilterExpression=Attr('identification').eq(identification))
+            result = response.get('Items', [])
         elif phone_number is not None:
-            response = table.get_item(
-                Key={
-                    'phoneNumber': phone_number,
-                }
-            )
+            response = table.scan(FilterExpression=Attr('phoneNumber').eq(phone_number))
+            result = response.get('Items', [])
         else:
-            response = table.get_item()
+            response = table.scan()
+            result = response.get('Items', [])
 
-        result = response.get('Item')
-
-        if result is not None:
-            return ResponseTemplate.data_response(result)
-
-        return ResponseTemplate.not_found("No se encontraron datos.")
+        return result
 
     except Exception as e:
         print(e)
+        return []
 
-def search_user_by_id(user_id: int | None = None):
+def search_user_by_id_ddb(
+        user_id: str | None = None,
+        table_name: str | None = None
+):
     try:
-        table = dynamodb_config(table_name=TableName.USERS)
+        table = dynamodb_config(table_name=table_name)
         response: Any | None = None
 
         if user_id is not None:
             response = table.get_item(
                 Key={
-                    'userId': user_id,
+                    'UserId': user_id,
                 }
             )
 

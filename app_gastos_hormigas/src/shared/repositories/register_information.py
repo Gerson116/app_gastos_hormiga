@@ -17,7 +17,7 @@ def register_and_update_data(
 
         if data is not None:
             table.put_item(Item=data)
-            return ResponseTemplate.created("Proceso exitoso")
+            return ResponseTemplate.success(data)
 
 
         if multiple_data is not None:
@@ -25,6 +25,6 @@ def register_and_update_data(
                 for item in data:
                     batch.put_item(Item=item)
 
-            return ResponseTemplate.created("Proceso exitoso")
+            return ResponseTemplate.success("Proceso exitoso")
     except Exception as e:
         print(e)

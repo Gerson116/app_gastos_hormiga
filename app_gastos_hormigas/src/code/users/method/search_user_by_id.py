@@ -1,28 +1,21 @@
 from app_gastos_hormigas.constants.table_config import TableName
 from app_gastos_hormigas.src.shared.commond import dynamodb_config
+from app_gastos_hormigas.src.shared.repositories.user import search_user_by_id_ddb
 from app_gastos_hormigas.src.shared.response_template import ResponseTemplate
 
-def search_user_by_id(event):
+
+def search_user_by_id(event, env):
     try:
         # TODO: DEBO CREAR UNA RAMA PARA GUARDAR LAS BITACORAS.
         path_params = event.get("pathParameters")
 
         user_id: str = path_params.get("userId")
 
-        table = dynamodb_config(table_name=TableName.USERS)
+        temp_table_name = f"{TableName.USERS}_{env}"
 
-        response = table.get_item(
-            Key={
-                'userId': user_id,
-            }
-        )
+        data = search_user_by_id_ddb(user_id=user_id, table_name=temp_table_name)
 
-        obj_user = response.get('Item')
-
-        if obj_user is None:
-            return ResponseTemplate.not_found("Usuario no encontrado")
-
-        return ResponseTemplate.data_response(obj_user)
+        return data
 
     except Exception as e:
         print(e)
