@@ -1,7 +1,4 @@
-#!/usr/bin/env python3
-
 from app_gastos_hormigas.lib.gastos_hormigas_dynamo_stack import GastosHormigasDynamoStack
-import os
 
 import aws_cdk as cdk
 
@@ -26,8 +23,8 @@ else:
 
 full_name = full_project_name(account_env)
 
-GastosHormigasLambdaStack(app, f"{full_name}-lambda", env=env)
+dynamo_stack = GastosHormigasDynamoStack(app, f"{full_name}-dynamo", env=env)
 
-GastosHormigasDynamoStack(app, f"{full_name}-dynamo", env=env)
+GastosHormigasLambdaStack(app, f"{full_name}-lambda", env=env, dynamo_tables=dynamo_stack.tables)
 
 app.synth()

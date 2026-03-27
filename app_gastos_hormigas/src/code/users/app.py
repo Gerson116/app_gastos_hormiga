@@ -27,10 +27,13 @@ def lambda_handler(event, _):
 
     method = event['httpMethod']
     resource = event['resource']
+    # todo: esta variable debo buscar la manera de que sea enviada desde github action al momento de desplegar los
+    #   ambientes dev, cert y prod
+    env = 'dev'
     handler = ROUTES.get((method, resource))
 
     if handler:
-        return handler(event=event)
+        return handler(event=event, env=env)
 
     return {
         "statusCode": 400,

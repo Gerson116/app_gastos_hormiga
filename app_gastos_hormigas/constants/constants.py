@@ -1,4 +1,6 @@
 
+REGION_NAME = 'us-east-1'
+
 class Environment:
     DEV = "dev"
     CERT = "cert"
@@ -20,3 +22,7 @@ class MethodHttp:
     POST = "POST"
     PATCH = "PATCH"
     DELETE = "DELETE"
+
+class UserState:
+    ACTIVE = 'AC'
+    INACTIVE = 'IN'

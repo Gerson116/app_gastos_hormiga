@@ -1,6 +1,13 @@
-
 import json
+from decimal import Decimal
 from http import HTTPStatus
+
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Decimal):
+            return int(obj) if obj % 1 == 0 else float(obj)
+        return super(DecimalEncoder, self).default(obj)
+
 class ResponseTemplate:
     HEADERS = {
         "Content-Type": "application/json",
@@ -10,11 +17,27 @@ class ResponseTemplate:
     }
 
     @staticmethod
+    def success(data, code=HTTPStatus.OK):
+        return {
+            "statusCode": code,
+            "headers": ResponseTemplate.HEADERS,
+            "body": json.dumps(data, cls=DecimalEncoder)
+        }
+
+    @staticmethod
     def data_response(data, code=HTTPStatus.OK):
         return {
             "statusCode": code,
             "headers": ResponseTemplate.HEADERS,
-            "body": json.dumps(data)
+            "body": json.dumps(data, cls=DecimalEncoder)
+        }
+
+    @staticmethod
+    def created(message, code=HTTPStatus.CREATED):
+        return {
+            "statusCode": code,
+            "headers": ResponseTemplate.HEADERS,
+            "body": json.dumps({"message": message})
         }
 
     @staticmethod
@@ -22,14 +45,14 @@ class ResponseTemplate:
         return {
             "statusCode": code,
             "headers": ResponseTemplate.HEADERS,
-            "body": {
-                "data": json.dumps(data),
+            "body": json.dumps({
+                "data": data,
                 "pagination": {
                     "page": page,
                     "limit": limit,
                     "total": total
                 }
-            }
+            }, cls=DecimalEncoder)
         }
 
     @staticmethod
@@ -37,9 +60,9 @@ class ResponseTemplate:
         return {
             "statusCode": code,
             "headers": ResponseTemplate.HEADERS,
-            "body": {
+            "body": json.dumps({
                 "message": message
-            }
+            })
         }
 
     @staticmethod
@@ -47,7 +70,7 @@ class ResponseTemplate:
         return {
             "statusCode": code,
             "headers": ResponseTemplate.HEADERS,
-            "body": {
+            "body": json.dumps({
                 "message": message
-            }
+            })
         }
